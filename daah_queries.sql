@@ -1,23 +1,9 @@
-#Which projects started between 1990 and 2000?
-select ProjectName, ProjectDesc, ProjectStartDate from AADH_Projects
-where ProjectStartDate between "1990" and "2000"
-order by ProjectStartDate asc;
-
 #Who are the main funders of DAAH projects?
 select InstitutionName, count(ProjectInstitutionsID) as NumProjects
 from AADH_Institutions
 inner join AADH_ProjectInstitutions
 using (InstitutionID)
 where ProjInstRole = "Funder"
-group by InstitutionName
-order by NumProjects desc;
-
-#Who are the main sponsors of DAAH projects?
-select InstitutionName, count(ProjectInstitutionsID) as NumProjects
-from AADH_Institutions
-inner join AADH_ProjectInstitutions
-using (InstitutionID)
-where ProjInstRole = "Sponsor"
 group by InstitutionName
 order by NumProjects desc;
 
@@ -28,14 +14,6 @@ inner join AADH_ProjectCategories
 using (CategoryID)
 group by CategoryName
 order by NumProjects desc;
-
-#What historical periods are represented in the digital exhibits?
-select ProjectName, ProjectHist from AADH_Projects
-inner join AADH_ProjectCategories
-using (ProjectID)
-inner join AADH_Categories
-using (CategoryID)
-where CategoryName="Digital Exhibit";
 
 #What tools are used most frequently for mapping projects?
 select ToolName, count(ProjectToolsID) as NumProjects
